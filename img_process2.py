@@ -1,6 +1,7 @@
-import os
-import json
-from fsspec import filesystem
+import os 
+import json 
+import re 
+import glob
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw
@@ -57,26 +58,24 @@ def create_mask(img, js):
     ax[1].set_title('Segmentation')
     ax[1].imshow(mask)
     ax[2].set_title('Groundtruth')
-    ax[2].imshow(label2rgb(mask>0, img, bg_label = 0))
+    ax[2].imshow(label2rgb(mask>0, img, bg_label = 1))
     
     # out = fig.savefig()
     return fig
-
-# create_mask("/Users/johnson/Desktop/img_process/train_anno_jpg/00000000.jpg", "/Users/johnson/Desktop/img_process/json/00000001.json")
-
+    
 
 def load_file():
 
     ROOT = os.getcwd()
     
-    imgs_dir = os.path.join(ROOT, "train_anno_jpg")
+    imgs_dir = os.path.join(ROOT, "toy_img")
     imgs =  os.listdir(imgs_dir)
 
-    jsons_dir = os.path.join(ROOT, "json")
+    jsons_dir = os.path.join(ROOT, "toy_json")
     jsons =  os.listdir(jsons_dir)
     
     def last_chars(x):
-        return(x[-6:])
+        return(x[-7:])
     
     img_ls = []
     for img in sorted(imgs, key = last_chars):    
@@ -91,39 +90,17 @@ def load_file():
 
     img_with_json = dict([[y,json_ls[x]] for x,y in enumerate(img_ls)])
 
-    for i, j in img_with_json.items():
-        outdir = os.path.join(ROOT, "output")
-        fig = create_mask(i, j)
-        return fig
-        # plt.savefig('0'+i)
-        # print(i)
-        # print(j)
-        
+    for i, j in img_with_json.items():        
+        print(f'{i}\t{j}\t\n', file=open("test.txt", "a"))
 
+        overview_dir = os.path.join(ROOT, "overview")
+        fig = create_mask(i, j)
+        res = re.findall("(\d+).jpg", i)
+        # print(res[0]) 
+        # return fig
+        plt.savefig(os.path.join(overview_dir, res[0]))
+        
     # with open(img,'rb') as thefile:
     #     create_mask() 
 
 load_file()
-
-
-
-
-# def load_file():
-#     ROOT = os.getcwd()
-#     #go to different folder
-#     imgs = os.path.join(ROOT, "train_anno_jpg")
-#     file_list =  os.listdir(imgs):
-    
-#     def last_4chars(x):
-#         return(x[-4:])
-
-#     sorted(file_list, key = last_4chars)   
-    # iteration of files in folder
-    # for file in os.listdir(dir):
-    #     files = os.path.join(dir, file)
-
-    # return files
-
-# load_file()
-
-# class image_process():
