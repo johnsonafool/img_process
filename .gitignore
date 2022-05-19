@@ -1,6 +1,6 @@
 # ignore ALL files in ANY directory named temp
 output/
-overview_jpg/
+overview/
 # train_anno_json/
 train_anno_jpg/
 # train_img_jpg/
