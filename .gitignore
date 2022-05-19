@@ -5,3 +5,11 @@ train_img_jpg/
 
 output/
 overview_jpg/
+
+# JPEG
+*.jpg
+*.jpeg
+*.jpe
+*.jif
+*.jfif
+*.jfi
