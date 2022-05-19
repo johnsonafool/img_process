@@ -1,0 +1,7 @@
+# ignore ALL files in ANY directory named temp
+train_anno_json/
+train_anno_jpg/
+train_img_jpg/
+
+output/
+overview_jpg/
